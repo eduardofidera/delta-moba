@@ -21,11 +21,13 @@ class Search extends React.Component {
 
         this.state = {
             summonerName: undefined,
-            summoner: []
+            loading: false,
+            summoner: undefined
         }
     }
 
     onSubmit = (e) => {
+        this.setState({loading: true});
         const URL_TO_FETCH = 'https://br1.api.riotgames.com/lol/summoner/v3/summoners/by-name/';
         const API_KEY = 'RGAPI-087ae13e-0a64-4704-a42e-558d5df3391e';
         e.preventDefault();
@@ -37,9 +39,10 @@ class Search extends React.Component {
             return res.json();
         }).then((data) => {
             this.setState({
-                summoner: data
+                summoner: data.id ? data : undefined,
+                loading: false
             })
-            console.log(data);
+            console.log(this.state.summoner);
         })
 
     }
@@ -56,7 +59,14 @@ class Search extends React.Component {
                 <form onSubmit={this.onSubmit}>
                     <input type="text" onChange={this.onNameChange} />
                     <button type="submit">search</button>
+                    {this.state.loading && <span>loading...</span>}
                 </form>
+                {this.state.summoner ? (
+                    <div key={this.state.summoner.id}>
+                        <span>{this.state.summoner.accountId}</span>
+                        <p>{this.state.summoner.name}</p>
+                    </div>
+                ) : <p>no summoner found</p>}
             </div>
         )
     }
