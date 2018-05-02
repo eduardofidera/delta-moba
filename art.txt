@@ -1,0 +1,9 @@
+application that consumes riotgames API, example endpoint:
+https://br1.api.riotgames.com/lol/summoner/v3/summoners/by-name/tiopsico?api_key=RGAPI-087ae13e-0a64-4704-a42e-558d5df3391e
+
+api_key:
+RGAPI-087ae13e-0a64-4704-a42e-558d5df3391e
+
+regex summoner name:
+^[0-9\\p{L} _\\.]+$
+
